@@ -3,7 +3,7 @@ from time import sleep
 from tkinter import *
 from gameConfig import wTitle,wRes
 
-dataFile = "data.xml"
+dataFile = "Code/data.xml"
 xmlTree = ET.parse(dataFile)
 xmlData = xmlTree.find("data")
 xmlClicks = xmlData.get("clicks")
