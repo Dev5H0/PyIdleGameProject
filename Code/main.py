@@ -87,6 +87,8 @@ def toggleUpgrade():
       acToggle = "Disabled"
       acToggleButton = Button(upgradeTab,text="Auto Clicker "+acToggle,command=toggleUpgrade)
       acToggleButton.update_idletasks
+
+      
 clickButton = Button(mainTab,text="Click Me",command=onMainClick)
 saveButton = Button(settingsTab,text="Save",command=onSave)
 
