@@ -1,3 +1,6 @@
 <game>
    <data clicks="0" />
+   <upgrades>
+      <autoClicker l="0" />
+   </upgrades>
 </game>
