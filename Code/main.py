@@ -7,23 +7,6 @@ from tkinter import *
 from tkinter import ttk
 from gameConfig import wTitle,wRes
 # </imports>
-<<<<<<< HEAD
-
-# <data>
-# <xml setup>
-dataFile = "Code/data.xml" # Location of data file
-xmlTree = ET.parse(dataFile) 
-xmlData = xmlTree.find("data") # Looks for the "data" tag
-xmlClicks = xmlData.get("clicks") # Looks for the "clicks" attribute inside of the data tag
-xmlUpgrades = xmlTree.find("upgrades")
-# </xml setup>
-# <upgrades>
-ugAutoClick = xmlUpgrades.find("autoClicker")
-xmlAutoClick = ugAutoClick.get("l")
-
-acPrice = 10
-
-=======
 
 # <data>
 # <xml setup>
@@ -37,7 +20,6 @@ xmlUpgrades = xmlTree.find("upgrades")
 ugAutoClick = xmlUpgrades.find("autoClicker")
 xmlAutoClick = ugAutoClick.get("l")
 acPrice = 10
->>>>>>> a2
 print(xmlAutoClick)
 # </upgrades>
 autoClick = int(xmlAutoClick)
@@ -89,33 +71,6 @@ def onSave(): # Save progress
    ugAutoClick.set(("l"),str(autoClick))
    # </save upgrades>
    xmlTree.write(dataFile) # Saves the data file with the new attribute value
-<<<<<<< HEAD
-def upgrade(ugButton):
-   global autoClick
-   global ugPrice
-   global ugChosen
-   global ugMult
-   global ugButton1
-   if ugButton == "AC":
-      ugChosen = autoClick
-      ugPrice = acPrice
-      ugButton1 = acButton
-   ugMult = ugChosen
-   while ugMult != 0:
-      ugPrice = round(ugPrice*.5)
-      ugMult = ugMult-1
-   global clicks
-   if clicks >= ugPrice:
-      print(clicks)
-      autoClick += 1
-      clicks = clicks-ugPrice
-      print(clicks)
-      ugButton1.update_idletasks
-      clickLabel.config(text="Clicks: "+str(clicks))
-      clickLabel.update_idletasks
-clickButton = Button(root,text="Click Me",command=onMainClick)
-acButton = Button(root,text="Auto Clicker "+str(int(autoClick)+1)+": "+str(acPrice)+" Clicks",command=lambda: upgrade("AC"))
-=======
 def upgrade(number):
    global clicks
    if clicks >= acPrice:
@@ -128,7 +83,6 @@ def upgrade(number):
       clickLabel.update_idletasks
 clickButton = Button(root,text="Click Me",command=onMainClick)
 upgradeButton = Button(root,text="Auto Clicker "+str(int(autoClick)+1)+": "+str(acPrice)+" Clicks",command=lambda: upgrade(1))
->>>>>>> a2
 saveButton = Button(root,text="Save",command=onSave)
 
 
@@ -140,11 +94,7 @@ saveButton.pack()
 
 emptyLabel.pack()
 upgradesLabel.pack()
-<<<<<<< HEAD
-acButton.pack()
-=======
 upgradeButton.pack()
->>>>>>> a2
 # </tkinter widgets setup>
 
 root.mainloop()
