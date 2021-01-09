@@ -1,6 +1,12 @@
 <game>
+<<<<<<< HEAD
    <data clicks="0" />
    <upgrades>
       <autoClicker l="0" />
+=======
+   <data clicks="1" />
+   <upgrades>
+      <autoClicker l="2" />
+>>>>>>> a2
    </upgrades>
 </game>
