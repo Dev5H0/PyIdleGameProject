@@ -18,10 +18,11 @@ xmlUpgrades = xmlTree.find("upgrades")
 # </xml setup>
 # <upgrades>
 ugAutoClick = xmlUpgrades.find("autoClicker")
-autoClick = ugAutoClick.get("l")
+xmlAutoClick = ugAutoClick.get("l")
 acPrice = 10
-print(autoClick)
+print(xmlAutoClick)
 # </upgrades>
+autoClick = int(xmlAutoClick)
 clicks = int(xmlClicks) # Takes the string from <data clicks="">, converts it into an integer and puts it into a variable
 # </data>
 
@@ -70,11 +71,21 @@ def onSave(): # Save progress
    ugAutoClick.set(("l"),str(autoClick))
    # </save upgrades>
    xmlTree.write(dataFile) # Saves the data file with the new attribute value
-#def upgrade():
-
+def upgrade(number):
+   global clicks
+   if clicks >= acPrice:
+      global autoClick
+      print(clicks)
+      autoClick += number
+      clicks = clicks-acPrice
+      print(clicks)
+      clickLabel.config(text="Clicks: "+str(clicks))
+      clickLabel.update_idletasks
 clickButton = Button(root,text="Click Me",command=onMainClick)
-upgradeButton = Button(root,text="Auto Clicker "+str(int(autoClick)+1)+": "+str(acPrice),)
+upgradeButton = Button(root,text="Auto Clicker "+str(int(autoClick)+1)+": "+str(acPrice)+" Clicks",command=lambda: upgrade(1))
 saveButton = Button(root,text="Save",command=onSave)
+
+
 
 clickLabel.pack()
 clickButton.pack()
