@@ -1,10 +1,10 @@
 # Imports
+from enum import auto
 import xml.etree.ElementTree as ET
 from time import sleep
 from tkinter import *
 from tkinter import ttk
 from gameConfig import wTitle,wRes
-
 
 # XML
 dataFile = "Code/data.xml"
@@ -15,19 +15,34 @@ xmlClicks = xmlData.get("clicks")
 xmlUpgrades = xmlTree.find("upgrades")
 ugAutoClick = xmlUpgrades.find("autoClicker")
 xmlAutoClick = ugAutoClick.get("l")
+
+
+# Upgrade Prices
 acPrice = 10
 
 
-# Data variables
+# Data Variables
 autoClick = int(xmlAutoClick)
 clicks = int(xmlClicks)
 
 
+# Tkinter
+root = Tk()
+root.title(wTitle)
+root.geometry(wRes)
+
+
+# String Variables
+svClicks = StringVar()
+svACUpgrade = StringVar()
+
+
 # Functions
-def updateScore():
-   
+def updateClicks():
+   global svClicks
    svClicks
    svClicks.set("Clicks: "+str(clicks))
+updateClicks()
 
 def onMainClick():
    global clicks
@@ -42,20 +57,30 @@ def onSave():
    ugAutoClick.set(("l"),str(autoClick))
    xmlTree.write(dataFile)
 
-def upgrade(number):
-   global clicks
-   global acPrice
-   if clicks >= acPrice:
-      global autoClick
-      print(clicks)
-      autoClick += number
-      clicks = clicks-acPrice
-      print(clicks)
-      acPrice = int(round(float(acPrice)*float(1.3)))
-      ugClickLabel.config(text="Clicks: "+str(clicks))
-      clickLabel.config(text="Clicks: "+str(clicks))
-      ugClickLabel.update_idletasks
-      clickLabel.update_idletasks
+def onUpgrade(upgrade):
+   global clicks,ugPrice,ugName,ugNameV,ugNameW
+   if upgrade == "AC":
+      global autoClick,acPrice
+      ugNameV = autoClick
+      ugPrice = acPrice
+      ugName = "Auto Clicker "
+      ugNameW = svACUpgrade
+#   elif upgrade == "":
+#      global upgrade,upgradePrice
+#      ugNameV = upgrade
+#      ugPrice = upgradePrice
+#      ugName = "Upgrade "
+#      ugNameW = svUpgradeWidget
+
+   if clicks >= ugPrice:
+      autoClick += 1
+      print("Upgrade")
+      clicks = clicks-ugPrice
+      updateClicks()
+      ugName = ugName+str(ugNameV+2)+": "
+      ugPrice = int(round(ugPrice*1.3))
+      ugNameW.set(ugName+str(ugPrice))
+svACUpgrade.set("Auto Clicker "+str(int(autoClick)+1)+": "+str(acPrice))
 
 def autoClicking():
    global acToggle
@@ -79,17 +104,6 @@ def toggleUpgrade():
       acToggle = "Disabled"
       acToggleButton = Button(upgradeTab,text="Auto Clicker "+acToggle,command=toggleUpgrade)
       acToggleButton.update_idletasks
-
-
-# Tkinter
-root = Tk()
-root.title(wTitle)
-root.geometry(wRes)
-
-
-# String Variables
-svClicks = StringVar()
-svACUpgrade = StringVar()
 
 
 # Tabs
@@ -118,7 +132,7 @@ upgradesLabel.pack()
 ugClickLabel = Label(upgradeTab,textvariable=svClicks)
 ugClickLabel.pack(pady=5)
 
-acButton = Button(upgradeTab,text="Auto Clicker "+str(int(autoClick)+1)+": "+str(acPrice)+" Clicks",command=lambda: upgrade(1))
+acButton = Button(upgradeTab,textvariable=svACUpgrade,command=lambda: onUpgrade("AC"))
 acButton.pack()
 
 acToggle = "Disabled"
