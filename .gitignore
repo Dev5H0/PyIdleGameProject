@@ -1,2 +1,6 @@
+LICENSE
+
+.gitattributes
+
 __pycache__/
 .vscode/
