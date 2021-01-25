@@ -1,13 +1,12 @@
 # Imports
-from enum import auto
+from gameConfig import *
 import xml.etree.ElementTree as ET
-from time import sleep
 from tkinter import *
 from tkinter import ttk
-from gameConfig import wTitle,wRes
+from time import sleep as wait
 
 # XML
-dataFile = "Code/data.xml"
+dataFile = "data.xml"
 xmlTree = ET.parse(dataFile) 
 xmlData = xmlTree.find("data")
 xmlClicks = xmlData.get("clicks")
@@ -16,28 +15,23 @@ xmlUpgrades = xmlTree.find("upgrades")
 ugAutoClick = xmlUpgrades.find("autoClicker")
 xmlAutoClick = ugAutoClick.get("l")
 
-
 # Upgrade Prices
 acPrice = 10
-
 
 # Data Variables
 autoClick = int(xmlAutoClick)
 clicks = int(xmlClicks)
-
 
 # Tkinter
 root = Tk()
 root.title(wTitle)
 root.geometry(wRes)
 
-
 # String Variables
 svClicks = StringVar()
 svACUpgrade = StringVar()
 
-
-# Functions
+# Funtions
 def updateClicks():
    global svClicks
    svClicks
@@ -48,7 +42,7 @@ def onMainClick():
    global clicks
    clicks += 1
    svClicks.set("Clicks: "+str(clicks))
-   sleep(.1)
+   wait(.1)
 
 def onSave():
    global clicks 
@@ -65,12 +59,6 @@ def onUpgrade(upgrade):
       ugPrice = acPrice
       ugName = "Auto Clicker "
       ugNameW = svACUpgrade
-#   elif upgrade == "":
-#      global upgrade,upgradePrice
-#      ugNameV = upgrade
-#      ugPrice = upgradePrice
-#      ugName = "Upgrade "
-#      ugNameW = svUpgradeWidget
 
    if clicks >= ugPrice:
       autoClick += 1
@@ -79,6 +67,7 @@ def onUpgrade(upgrade):
       updateClicks()
       ugName = ugName+str(ugNameV+2)+": "
       ugPrice = int(round(ugPrice*1.3))
+      
       ugNameW.set(ugName+str(ugPrice))
 svACUpgrade.set("Auto Clicker "+str(int(autoClick)+1)+": "+str(acPrice))
 
@@ -90,8 +79,8 @@ def autoClicking():
       clicks += autoClick
       ugClickLabel.update_idletasks
       clickLabel.update_idletasks
-      sleep(1)
-   else: sleep(.5)
+      wait(1)
+   else: wait(.5)
 
 def toggleUpgrade():
    global acToggle
@@ -105,7 +94,6 @@ def toggleUpgrade():
       acToggleButton = Button(upgradeTab,text="Auto Clicker "+acToggle,command=toggleUpgrade)
       acToggleButton.update_idletasks
 
-
 # Tabs
 tkTabs = ttk.Notebook(root)
 mainTab = ttk.Frame(tkTabs)
@@ -117,13 +105,11 @@ tkTabs.add(upgradeTab,text="Upgrades")
 tkTabs.add(settingsTab,text="Settings")
 tkTabs.pack()
 
-
 # Main Tab
 clickLabel = Label(mainTab,textvariable=svClicks)
 clickButton = Button(mainTab,text="Click Me",command=onMainClick)
 clickLabel.pack(pady=5)
 clickButton.pack()
-
 
 # Upgrades Tab
 upgradesLabel = Label(upgradeTab,text="UPGRADES")
@@ -140,11 +126,10 @@ acToggleButton = Button(upgradeTab,text="Auto Clicker "+acToggle,command=toggleU
 if xmlAutoClick >= "1":
    acToggleButton.pack()
 
-
 # Settings Tab
 saveButton = Button(settingsTab,text="Save",command=onSave)
 saveButton.pack()
 
-
-
+# -
 root.mainloop()
+
