@@ -1,3 +1,5 @@
+ver = 'InDev.2.1.0'
+
 # Imports
 from config import *
 import xml.etree.ElementTree as ET
@@ -8,13 +10,14 @@ from time import sleep as wait
 import keyboard as kb
 from keymap import scSave,scExit
 
+import random
+
 # XML
 dataFile = "data.xml"
 xmlTree = ET.parse(dataFile) 
 xmlData = xmlTree.find("data")
 
-xmlUpgrades = xmlTree.find("upgrades")
-ugAutoClick = xmlUpgrades.find("autoClicker")
+ugAutoClick = xmlTree.find("autoClicker")
 xmlAutoClick = ugAutoClick.get("l")
 
 
@@ -30,7 +33,7 @@ acPrice = int(ugAutoClick.get("price"))
 
 # Tkinter
 root = Tk()
-root.title(wTitle)
+root.title('PyIdleClicker '+ver)
 root.geometry(wRes)
 
 
@@ -102,18 +105,36 @@ def sc(sc):
          root.destroy()
 
 
+test = StringVar()
+def onTest(t):
+   while True:
+      x = ['Hello World!', 'Click Me!', 'Cookies?']
+      wTime = 60
+      while True:
+         y = random.choice(x)
+         if y == test: 
+            wait(.1)
+            wTime -= .1
+            continue
+         else: break
+      test.set(y)
+      wait(wTime)
+
+
 # Threading
 acThread = tr.Thread(target=ac, daemon=True)
-ac
 
 threads = list()
 for t in range(1):
    tAc = tr.Thread(target=ac, daemon=True, args=(t,))
    tSc = tr.Thread(target=sc, daemon=True, args=(t,))
+   tTest = tr.Thread(target=onTest, daemon=True, args=(t,))
    tList = [tAc, tSc]
    threads.append(tList)
    tAc.start()
    tSc.start()
+
+   tTest.start()
 
 
 # Tabs
@@ -151,6 +172,10 @@ saveButton.pack()
 
 totalClicksLabel = Label(settingsTab,textvariable=svTotalClicks)
 totalClicksLabel.pack()
+
+
+# Root
+Label(root, textvariable=test).pack()
 
 # -
 updateClicks()

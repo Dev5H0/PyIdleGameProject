@@ -1,3 +1,3 @@
 # PyIdleGameProject
 
-# Version: 2.0.0
+# Version: InDev.2.0.0

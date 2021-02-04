@@ -2,5 +2,7 @@ LICENSE
 
 .gitattributes
 
+./code/__pycache__/
 __pycache__/
+.code/vscode/
 .vscode/
