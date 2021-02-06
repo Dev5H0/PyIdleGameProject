@@ -1,4 +1,5 @@
-<game>
-   <data clicks="0" total="0" />
-   <autoClicker l="0" price="10" />
-</game>
+<root>
+	<multipliers upgrade='11.5' />
+	<data clicks='0' total='0' resets='0' />
+	<autoClicker total='0' />
+</root>
